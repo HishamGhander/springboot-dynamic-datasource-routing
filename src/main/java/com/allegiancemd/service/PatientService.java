@@ -1,5 +1,6 @@
 package com.allegiancemd.service;
 
+import com.allegiancemd.config.DatabaseContextHolder;
 import com.allegiancemd.entity.Patient;
 import com.allegiancemd.repo.PatientRepository;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,8 @@ public class PatientService {
     private final PatientRepository patientRepository;
 
     public List<Patient> getPatients() {
-        return patientRepository.findAll();
+        final List<Patient> patients = patientRepository.findAll();
+        DatabaseContextHolder.clearDatabaseContext();
+        return patients;
     }
 }
