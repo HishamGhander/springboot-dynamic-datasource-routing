@@ -3,7 +3,7 @@ package com.allegiancemd.config;
 import com.allegiancemd.entity.Patient;
 import com.allegiancemd.model.AllegianceMdModel1;
 import com.allegiancemd.model.AllegianceMdModel2;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
+@AllArgsConstructor
 @Configuration
 @EnableJpaRepositories(
         basePackages = "com.allegiancemd.repo",
@@ -25,14 +26,12 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class DataSourceConfig {
 
-    @Autowired
-    private AllegianceMdModel1 allegianceMdModel1;
-    @Autowired
-    private AllegianceMdModel2 allegianceMdModel2;
+    private final AllegianceMdModel1 allegianceMdModel1;
+
+    private final AllegianceMdModel2 allegianceMdModel2;
 
     @Bean
     @Primary
-    @Autowired
     public DataSource dataSource() {
         DataSourceRouting dataSourceRouting = new DataSourceRouting();
         dataSourceRouting.initDataSource(allegianceMd1DataSource(), allegianceMd2DataSource());
@@ -62,7 +61,7 @@ public class DataSourceConfig {
 
     @Bean(name = "transcationManager")
     public JpaTransactionManager transactionManager(
-            @Autowired @Qualifier("entityManager") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
+            @Qualifier("entityManager") LocalContainerEntityManagerFactoryBean entityManagerFactoryBean) {
         return new JpaTransactionManager(entityManagerFactoryBean.getObject());
     }
 }

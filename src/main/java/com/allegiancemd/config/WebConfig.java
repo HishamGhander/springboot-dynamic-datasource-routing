@@ -1,14 +1,14 @@
 package com.allegiancemd.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@AllArgsConstructor
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-    @Autowired
-    private DataSourceInterceptor dataSourceInterceptor;
+    private final DataSourceInterceptor dataSourceInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
