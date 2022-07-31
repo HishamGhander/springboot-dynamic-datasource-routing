@@ -14,7 +14,7 @@ public class PatientService {
 
     private final PatientRepository patientRepository;
 
-    public List<Patient> patients() {
+    public List<Patient> getPatients() {
         return patientRepository.findAll();
     }
 }
